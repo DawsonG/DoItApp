@@ -1,0 +1,9 @@
+body {
+  font-family: 'Roboto';
+}
+
+div.container {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+}

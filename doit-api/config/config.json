@@ -1,0 +1,24 @@
+{
+  "development": {
+    "username": "",
+    "password": null,
+    "database": "kobold_development",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "kobold_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "kobold_production",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "secret": "L0NG#AND$SECRET-SQUIRREL.TREE-BARK_TOKEN5"
+}
