@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const omit = require('lodash/Omit');
+const omit = require('lodash/omit');
 const router = require('express').Router();
 
 const config = require('../config/config.json');
