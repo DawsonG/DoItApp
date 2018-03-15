@@ -26,8 +26,8 @@ const defaultState = {
 };
 
 export const selectors = {
-  error: state => state.error,
-  message: state => state.message,
+  error: state => state.user.error,
+  message: state => state.user.message,
 };
 
 function* authUser({ payload: { email, password }}) {
@@ -58,9 +58,10 @@ function* userFromToken({ payload: { token }}) {
 function* registerUser({ payload: { username, email, password }}) {
   try {
     const response = yield call(api.registerUser, username, email, password);
+
+    yield put(actions.registerResponse(response));
     if (response.success) {
-      yield put(actions.registerResponse(response));
-      yield put(history.push('/login'));
+      yield call(history.push, '/login');
     }
   } catch (e) {
     yield put(actions.registerResponse(e));
@@ -85,7 +86,7 @@ export default handleActions({
   [actions.authUserResponse]: {
     next(state, { payload }) {
       if (payload.success) {
-        return { ...state, loggedIn: true, user: payload.user };
+        return { ...state, loggedIn: true, user: payload.user, error: false, message: '' };
       }
 
       return { ...state, loggedIn: false, user: undefined, message: payload.message };
@@ -96,11 +97,12 @@ export default handleActions({
   },
   [actions.registerResponse]: {
     next(state, { payload }) {
+      console.log(payload);
       if (payload.success) {
-        return { ...state, error: false };
+        return { ...state, error: false, message: 'User created. Please login.' };
       }
 
-      return { ...defaultState, error: true, message: payload.message };
+      return { ...state, error: true, message: payload.message };
     },
     throw(state) {
       return { ...defaultState, error: true, message: 'Server Error' };
@@ -108,7 +110,7 @@ export default handleActions({
   },
   [actions.logoutResponse]: {
     next(state, { payload }) {
-      return { ...state, loggedIn: false, user: undefined };
+      return { ...state, loggedIn: false, user: undefined, error: false, message: '' };
     },
     throw(state) {
       return { ...defaultState, loggedIn: false };

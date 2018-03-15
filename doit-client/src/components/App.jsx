@@ -11,6 +11,7 @@ const App = () => (<div>
   <Switch>
     <Route path="/register" component={Register} />
     <Route path="/list" component={AuthGate} />
+    <Route path="/login" component={AuthGate} />
 
     <Redirect to="/list" />
   </Switch>

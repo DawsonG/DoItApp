@@ -8,7 +8,7 @@ import Login from 'components/Login';
 import List from 'containers/List.container';
 import AppBarContainer from 'containers/AppBar.container';
 
-import { actions } from 'modules/user';
+import { actions, selectors } from 'modules/user';
 import { localStorageGetString } from 'lib/storageManager';
 
 class AuthGateContainer extends Component {
@@ -71,13 +71,20 @@ class AuthGateContainer extends Component {
       );
     }
 
-    return <Login {...this.state} changeEmail={this.changeEmail} changePassword={this.changePassword} handleSubmit={this.handleSubmit} />;
+    return <Login 
+      {...this.state}
+      message={this.props.message}
+      changeEmail={this.changeEmail}
+      changePassword={this.changePassword}
+      handleSubmit={this.handleSubmit}
+    />;
   }
 }
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  isLoggedIn: state.user.loggedIn
+  isLoggedIn: state.user.loggedIn,
+  message: selectors.message(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
